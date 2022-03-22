@@ -18,9 +18,13 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
+import static org.mockito.Mockito.description;
 import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -54,8 +58,17 @@ class TodoControllerTest {
         when(todoService.getTodos()).thenReturn(todoResponses);
 
         mockMvc.perform(get("/todos")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(todoResponses)));
+                .andExpect(content().json(objectMapper.writeValueAsString(todoResponses)))
+                .andDo(document("get-todos",
+                        responseFields(
+                                fieldWithPath("[]").description("할 일 목록")
+                        ).andWithPrefix("[]",
+                                fieldWithPath("id").description("할 일 목록"),
+                                fieldWithPath("content").description("할 일 내용")
+                        )
+                ));
+
     }
 }

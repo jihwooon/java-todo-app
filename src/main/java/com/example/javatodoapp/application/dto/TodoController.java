@@ -1,4 +1,4 @@
-package com.example.javatodoapp.application.api;
+package com.example.javatodoapp.application.dto;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

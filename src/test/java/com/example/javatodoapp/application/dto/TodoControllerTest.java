@@ -1,4 +1,4 @@
-package com.example.javatodoapp.application.api;
+package com.example.javatodoapp.application.dto;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

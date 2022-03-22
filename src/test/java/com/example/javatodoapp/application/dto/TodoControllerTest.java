@@ -1,9 +1,11 @@
 package com.example.javatodoapp.application.dto;
 
+import com.example.javatodoapp.service.TodoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
@@ -23,6 +25,9 @@ class TodoControllerTest {
 
     private MockMvc mockMvc;
 
+    @MockBean
+    private TodoService todoService;
+
     @BeforeEach
     public void setUp(WebApplicationContext context, RestDocumentationContextProvider contextProvider) {
         mockMvc = MockMvcBuilders.webAppContextSetup(context)
@@ -32,7 +37,7 @@ class TodoControllerTest {
 
     @Test
     public void getTodos() throws Exception {
-        mockMvc.perform(get("/todods")
+        mockMvc.perform(get("/todos")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }

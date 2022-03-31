@@ -1,4 +1,4 @@
-package com.example.javatodoapp.service;
+package com.example.javatodoapp.application.service;
 
 import com.example.javatodoapp.application.dto.TodoRequest;
 import com.example.javatodoapp.application.dto.TodoResponse;

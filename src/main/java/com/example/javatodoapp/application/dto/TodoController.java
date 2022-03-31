@@ -1,6 +1,6 @@
 package com.example.javatodoapp.application.dto;
 
-import com.example.javatodoapp.service.TodoService;
+import com.example.javatodoapp.application.service.TodoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

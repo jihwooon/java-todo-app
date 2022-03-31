@@ -1,6 +1,6 @@
 package com.example.javatodoapp.application.dto;
 
-import com.example.javatodoapp.service.TodoService;
+import com.example.javatodoapp.application.service.TodoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,9 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(TodoController.class)
-@ExtendWith({SpringExtension.class, RestDocumentationExtension.class})
+@ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 class TodoControllerTest {
-
 
     private MockMvc mockMvc;
 
@@ -88,7 +87,7 @@ class TodoControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
                 .andExpect(content().json(objectMapper.writeValueAsString(response)))
-                .andDo(document("{method-name}}",
+                .andDo(document("{method-name}",
                         requestFields(
                                 fieldWithPath("content").description("할 일 내용")
                         ),

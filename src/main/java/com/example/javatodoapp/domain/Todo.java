@@ -1,7 +1,6 @@
 package com.example.javatodoapp.domain;
 
 
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -23,6 +22,13 @@ public class Todo {
 
     public static Todo of(String content) {
         Todo todo = new Todo();
+        todo.content = content;
+        return todo;
+    }
+
+    public static Todo of(Long id, String content) {
+        Todo todo = new Todo();
+        todo.id = id;
         todo.content = content;
         return todo;
     }

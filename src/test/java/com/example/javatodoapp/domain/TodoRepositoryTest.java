@@ -14,7 +14,7 @@ class TodoRepositoryTest {
 
     @Test
     public void save_and_get_delete() {
-        Todo todoToSave = Todo.of("할 일");
+        Todo todoToSave = Todo.of(1L, "할 일");
 
         Todo savedTodo = todoRepository.save(todoToSave);
 

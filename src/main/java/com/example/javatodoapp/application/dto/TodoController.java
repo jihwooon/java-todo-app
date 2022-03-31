@@ -1,10 +1,9 @@
 package com.example.javatodoapp.application.dto;
 
 import com.example.javatodoapp.service.TodoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,6 +21,12 @@ public class TodoController {
     public ResponseEntity<List<TodoResponse>> getTodos() {
         List<TodoResponse> todoResponses = todoService.getTodos();
         return ResponseEntity.ok(todoResponses);
+    }
+
+    @PostMapping
+    public ResponseEntity<TodoResponse> saveTodo(@RequestBody TodoRequest request) {
+         TodoResponse todoResponse = todoService.saveTodo(request);
+         return ResponseEntity.status(HttpStatus.CREATED).body(todoResponse);
     }
 
 }

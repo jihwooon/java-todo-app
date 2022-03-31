@@ -1,6 +1,7 @@
 package com.example.javatodoapp.application.dto;
 
 import com.example.javatodoapp.service.TodoService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.util.List;
 
@@ -25,6 +27,8 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -44,6 +48,8 @@ class TodoControllerTest {
     @BeforeEach
     public void setUp(WebApplicationContext context, RestDocumentationContextProvider contextProvider) {
         mockMvc = MockMvcBuilders.webAppContextSetup(context)
+                .alwaysDo(print())
+                .addFilter(new CharacterEncodingFilter("UTF-8", true))
                 .apply(documentationConfiguration(contextProvider))
                 .build();
     }
@@ -70,5 +76,18 @@ class TodoControllerTest {
                         )
                 ));
 
+    }
+
+    @Test
+    public void saveTodo() throws Exception {
+        TodoRequest request = TodoRequest.of("할 일");
+        TodoResponse response = TodoResponse.of(1L, request.getContent());
+
+        when(todoService.saveTodo(request)).thenReturn(response);
+
+        mockMvc.perform(post("/todos").contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andExpect(content().json(objectMapper.writeValueAsString(response)));
     }
 }

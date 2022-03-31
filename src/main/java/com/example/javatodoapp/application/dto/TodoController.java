@@ -29,4 +29,9 @@ public class TodoController {
          return ResponseEntity.status(HttpStatus.CREATED).body(todoResponse);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTodo(@PathVariable Long id) {
+        todoService.deleteTodo(id);
+        return ResponseEntity.noContent().build();
+    }
 }

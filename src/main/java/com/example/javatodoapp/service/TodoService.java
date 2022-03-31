@@ -9,4 +9,6 @@ public interface TodoService {
     List<TodoResponse> getTodos();
 
     TodoResponse saveTodo(TodoRequest request);
+
+    void deleteTodo(Long id);
 }
